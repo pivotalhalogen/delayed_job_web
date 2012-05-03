@@ -29,7 +29,6 @@ Gem::Specification.new do |s|
     "delayed_job_web.gemspec",
     "lib/delayed_job_web.rb",
     "lib/delayed_job_web/application/app.rb",
-    "lib/delayed_job_web/application/public/images/poll.png",
     "lib/delayed_job_web/application/public/javascripts/application.js",
     "lib/delayed_job_web/application/public/javascripts/jquery-1.7.1.min.js",
     "lib/delayed_job_web/application/public/javascripts/jquery.relatize_date.js",
