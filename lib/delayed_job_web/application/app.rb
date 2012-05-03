@@ -1,5 +1,4 @@
 require 'sinatra'
-require 'warden'
 require 'active_support'
 require 'active_record'
 require 'delayed_job'
@@ -52,12 +51,6 @@ class DelayedJobWeb < Sinatra::Base
     end
   end
 
-  before do
-    if env['warden'].unauthenticated?
-      halt 401, "User is not logged in."
-    end
-  end
-
   get '/overview' do
     if delayed_job
       haml :overview
@@ -77,27 +70,6 @@ class DelayedJobWeb < Sinatra::Base
       @all_jobs = delayed_jobs(page.to_sym)
       haml page.to_sym
     end
-  end
-
-  get "/remove/:id" do
-    delayed_job.find(params[:id]).delete
-    redirect back
-  end
-
-  get "/requeue/:id" do
-    job = delayed_job.find(params[:id])
-    job.update_attributes(:run_at => Time.now, :failed_at => nil)
-    redirect back
-  end
-
-  post "/failed/clear" do
-    delayed_job.destroy_all(delayed_job_sql(:failed))
-    redirect u('failed')
-  end
-
-  post "/requeue/all" do
-    delayed_jobs(:failed).update_all(:run_at => Time.now, :failed_at => nil)
-    redirect back
   end
 
   def delayed_jobs(type)

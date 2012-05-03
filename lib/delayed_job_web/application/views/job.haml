@@ -4,10 +4,6 @@
     %dd
       %a{:name => job.id}
       %a{:href => "##{job.id}"}=job.id
-      %div.controls
-        %a{:rel => 'retry', :href => u("requeue/#{job.id}")}Retry
-        or
-        %a{:rel => 'remove', :href => u("remove/#{job.id}")}Remove
     %dt Priority
     %dd= job.priority
     %dt Attempts
