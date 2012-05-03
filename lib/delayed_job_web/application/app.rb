@@ -4,7 +4,6 @@ require 'active_support'
 require 'active_record'
 require 'delayed_job'
 require 'haml'
-require 'awesome_print'
 
 class DelayedJobWeb < Sinatra::Base
   set :root, File.dirname(__FILE__)
@@ -54,8 +53,6 @@ class DelayedJobWeb < Sinatra::Base
   end
 
   before do
-    ap env['warden']
-
     if env['warden'].unauthenticated?
       halt 401, "User is not logged in."
     end
