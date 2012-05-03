@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'warden'
 require 'active_support'
 require 'active_record'
 require 'delayed_job'
@@ -48,6 +49,12 @@ class DelayedJobWeb < Sinatra::Base
       Delayed::Job
     rescue
       false
+    end
+  end
+
+  before do
+    if env['warden'].unauthenticated?
+      halt 401, "User is not logged in."
     end
   end
 
